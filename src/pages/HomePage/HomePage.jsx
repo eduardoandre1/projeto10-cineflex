@@ -3,26 +3,29 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 export default function HomePage() {
-    const [imagem,Setimagem]= useState([])
-    function generatemovies(MovieContainer){
+    const [cartaz,Setimagem]= useState([])
+    function generatemovies(){
         const promise = axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies')
         promise.then((respota)=> {
             console.log(respota.data)
-            respota.data.map((data)=>{
+            const filmes = respota.data.map((data)=>{
                 console.log(data.posterURL)
-                Setimagem(data.posterURL)
-                //return(
-                //        <img src={data.posterURL} alt="poster"/>
-            })})}
+                return(
+                    <MovieContainer key={data.id}>
+                        <img src={data.posterURL} alt="poster"/>
+                    </MovieContainer>
+                )
+            })
+            console.log(filmes)
+            Setimagem(filmes)
+        })}
             
     useEffect(()=>generatemovies(),[])
             return (
         <PageContainer>
             Selecione o filme
             <ListContainer>
-                <MovieContainer>
-                    <img src={imagem} alt="poster"/>
-                </MovieContainer>
+                {cartaz}
             </ListContainer>
 
         </PageContainer>
