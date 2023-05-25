@@ -14,14 +14,16 @@ export default function App() {
     axios.defaults.headers.common['Authorization'] = 'CXsWjs5oIZPtLIyHNdgCzRAl';
     const [cartaz,Setcartaz]= useState([])
     const[chosen,Setchosen]= useState('')
+    const [sessionid,Setsessionid] =useState(0)
+    const [seatspageid,Setseatspageid] =useState(0)
     return (
         <>
             <BrowserRouter>
             <NavContainer>CINEFLEX</NavContainer>
             <Routes>
                 <Route path="/" element={<HomePage Setchosen={Setchosen} cartaz={cartaz} Setcartaz={Setcartaz}/>}/>
-                <Route path="/SessionsPage" element={<SessionsPage  chosen={chosen}/>}/>
-                <Route path="/SeatsPage" element={<SeatsPage />}/>
+                <Route path="/SessionsPage" element={<SessionsPage  chosen={chosen} Setseatspageid={Setseatspageid}/>}/>
+                <Route path="/SeatsPage" element={<SeatsPage  seatspageid={seatspageid}/>}/>
                 <Route path="/SuccessPage" element={<SuccessPage />}/>
             </Routes>
             </BrowserRouter>

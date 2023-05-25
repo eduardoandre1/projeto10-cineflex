@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import axios from "axios"
 import { useState,useEffect } from "react"
+import { Link } from "react-router-dom"
 
 export default function SessionsPage(props) {
     const [Footer,SetFooter] = useState(<></>)
@@ -19,15 +20,19 @@ export default function SessionsPage(props) {
     }
     function SContainer(resposta){
         const season =resposta.days.map((days)=>
-        {   console.log(days)
+        {   
             return(
-            <SessionContainer>
+            <SessionContainer key={days.id}>
                         {days.weekday} - {days.date}
-                    <ButtonsContainer>
-                        {days.showtimes.map((data)=>{return(<button>{data.name}</button>)})}
+                    <Link to='/SeatsPage'>
+                    <ButtonsContainer >
+                        {days.showtimes.map((data)=>{return(<button onClick={()=>{props.Setseatspageid(data.id)}} key={data.id}>{data.name}</button>)})}
                     </ButtonsContainer>
+                    </Link>
             </SessionContainer>
-        )})
+        )
+        }
+        )
         Setsessions(season)
     }
     function sessões(){
@@ -77,8 +82,9 @@ const ButtonsContainer = styled.div`
     margin: 20px 0;
     button {
         margin-right: 20px;
+        text-decoration: none
     }
-    a {
+    Link {
         text-decoration: none;
     }
 `

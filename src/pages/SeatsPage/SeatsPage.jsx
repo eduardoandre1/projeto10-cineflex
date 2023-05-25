@@ -1,16 +1,64 @@
 import styled from "styled-components"
 import axios from "axios"
+import { useEffect, useState } from "react"
 export default function SeatsPage(props) {
+    const [footer,Setfooter] = useState(<></>)
+    const [seats,Setseats] = useState(<></>)
+    const [selected,Setselect] = useState([])
+
+    function seatselecition(id){
+        if(selected.indexOf(id) ==-1){
+            const newselected = [...selected,id]
+            Setselect(newselected)
+        }else{
+            const newselected = selected.filter((item) => item !== id )
+            Setselect(newselected)
+        }
+        console.log(selected)
+    }
+    function fconteiner(resposta){
+        Setfooter(<FooterContainer>
+                <div>
+                    <img src={resposta.movie.posterURL} alt="poster" />
+                </div>
+                <div>
+                    <p>{resposta.movie.title}</p>
+                    <p>{resposta.day.weekday} - {resposta.name}</p>
+                </div>
+            </FooterContainer>)
+    }
+    function seatgenerete(resposta){
+        Setseats(resposta.seats.map(
+            (seat)=>{
+                let Seatcor = ''
+                if(selected.indexOf(seat.id) == -1){
+                    Seatcor = styled(SeatItem)`
+                    background-color: ${seat.isAvailable===false?'#FBE192':'#C3CFD9'};
+                    border:${seat.isAvailable===false?'1px solid #F7C52B':'1px solid #808F9D'};
+                `
+                }else{
+                    Seatcor =styled(SeatItem)`
+                    background-color:#1AAE9E;
+                    border: 3px solid 1px solid #0E7D71;
+                    `
+                }
+                return(
+                    <Seatcor key={seat.id} onClick={()=>seatselecition(seat.id)} disabled={seat.isAvailable==true?false:true}> {seat.name}</Seatcor>
+                )
+            }
+        ))
+    }
+    function assentos(){
+        const promise = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${props.seatspageid}/seats`)
+        promise.then((resposta)=>{fconteiner(resposta.data);seatgenerete(resposta.data);console.log(resposta.data)})
+    }
+    useEffect(assentos,[selected])
     return (
         <PageContainer>
             Selecione o(s) assento(s)
 
             <SeatsContainer>
-                <SeatItem>01</SeatItem>
-                <SeatItem>02</SeatItem>
-                <SeatItem>03</SeatItem>
-                <SeatItem>04</SeatItem>
-                <SeatItem>05</SeatItem>
+                {seats}
             </SeatsContainer>
 
             <CaptionContainer>
@@ -30,23 +78,15 @@ export default function SeatsPage(props) {
 
             <FormContainer>
                 Nome do Comprador:
-                <input placeholder="Digite seu nome..." />
+                <input placeholder="Digite seu nome..." data-test="client-name"/>
 
                 CPF do Comprador:
-                <input placeholder="Digite seu CPF..." />
+                <input placeholder="Digite seu CPF..." data-test="client-cpf"/>
 
                 <button>Reservar Assento(s)</button>
             </FormContainer>
 
-            <FooterContainer>
-                <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
-                </div>
-                <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
-                    <p>Sexta - 14h00</p>
-                </div>
-            </FooterContainer>
+            {footer}
 
         </PageContainer>
     )
