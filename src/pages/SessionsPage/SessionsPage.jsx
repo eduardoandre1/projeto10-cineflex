@@ -4,6 +4,7 @@ import { useState,useEffect } from "react"
 
 export default function SessionsPage(props) {
     const [Footer,SetFooter] = useState(<></>)
+    const [sessions,Setsessions] = useState(<></>)
     function FContainer(resposta){
         SetFooter(
             <FooterContainer>
@@ -16,9 +17,22 @@ export default function SessionsPage(props) {
             </FooterContainer>
         )
     }
+    function SContainer(resposta){
+        const season =resposta.days.map((days)=>
+        {   console.log(days)
+            return(
+            <SessionContainer>
+                        {days.weekday} - {days.date}
+                    <ButtonsContainer>
+                        {days.showtimes.map((data)=>{return(<button>{data.name}</button>)})}
+                    </ButtonsContainer>
+            </SessionContainer>
+        )})
+        Setsessions(season)
+    }
     function sessões(){
         const promise = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${props.chosen.id}/showtimes`)
-        promise.then((respota)=>{FContainer(respota.data)})
+        promise.then((respota)=>{FContainer(respota.data);SContainer(respota.data)})
         promise.catch((respota)=>{console.log('erro')})
     }
     useEffect(sessões,[])
@@ -26,29 +40,7 @@ export default function SessionsPage(props) {
         <PageContainer>
             Selecione o horário
             <div>
-                <SessionContainer>
-                    Sexta - 03/03/2023
-                    <ButtonsContainer>
-                        <button>14:00</button>
-                        <button>15:00</button>
-                    </ButtonsContainer>
-                </SessionContainer>
-
-                <SessionContainer>
-                    Sexta - 03/03/2023
-                    <ButtonsContainer>
-                        <button>14:00</button>
-                        <button>15:00</button>
-                    </ButtonsContainer>
-                </SessionContainer>
-
-                <SessionContainer>
-                    Sexta - 03/03/2023
-                    <ButtonsContainer>
-                        <button>14:00</button>
-                        <button>15:00</button>
-                    </ButtonsContainer>
-                </SessionContainer>
+            {sessions}
             </div>
             {Footer}
 
