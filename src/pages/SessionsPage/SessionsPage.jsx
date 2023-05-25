@@ -1,14 +1,27 @@
 import styled from "styled-components"
 import axios from "axios"
+import { useState,useEffect } from "react"
 
 export default function SessionsPage(props) {
+    const [Footer,SetFooter] = useState(<></>)
+    function FContainer(resposta){
+        SetFooter(
+            <FooterContainer>
+                <div data-test="footer">
+                    <img src={resposta.posterURL} alt="poster" />
+                </div>
+                <div data-test="footer">
+                    <p>{resposta.title}</p>
+                </div>
+            </FooterContainer>
+        )
+    }
     function sessões(){
-        const promise = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${props.id}/showtimes`)
-        promise.then((respota)=>{console.log(respota.data)})
+        const promise = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${props.chosen.id}/showtimes`)
+        promise.then((respota)=>{FContainer(respota.data)})
         promise.catch((respota)=>{console.log('erro')})
     }
-    
-    sessões()
+    useEffect(sessões,[])
     return (
         <PageContainer>
             Selecione o horário
@@ -37,14 +50,7 @@ export default function SessionsPage(props) {
                     </ButtonsContainer>
                 </SessionContainer>
             </div>
-            <FooterContainer>
-                <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
-                </div>
-                <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
-                </div>
-            </FooterContainer>
+            {Footer}
 
         </PageContainer>
     )

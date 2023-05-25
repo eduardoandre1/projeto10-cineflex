@@ -12,15 +12,15 @@ import SuccessPage from "./pages/SuccessPage/SuccessPage"
 
 export default function App() {
     axios.defaults.headers.common['Authorization'] = 'CXsWjs5oIZPtLIyHNdgCzRAl';
-    const [cartaz,Setimagem]= useState([])
-    const[id,Setid]= useState(0)
+    const [cartaz,Setcartaz]= useState([])
+    const[chosen,Setchosen]= useState('')
     return (
         <>
             <BrowserRouter>
             <NavContainer>CINEFLEX</NavContainer>
             <Routes>
-                <Route path="/" element={<HomePage Setid={Setid} cartaz={cartaz} Setimagem={Setimagem}/>}/>
-                <Route path="/SessionsPage" element={<SessionsPage  id={id}/>}/>
+                <Route path="/" element={<HomePage Setchosen={Setchosen} cartaz={cartaz} Setcartaz={Setcartaz}/>}/>
+                <Route path="/SessionsPage" element={<SessionsPage  chosen={chosen}/>}/>
                 <Route path="/SeatsPage" element={<SeatsPage />}/>
                 <Route path="/SuccessPage" element={<SuccessPage />}/>
             </Routes>

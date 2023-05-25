@@ -7,15 +7,16 @@ export default function HomePage(props) {
         const promise = axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies')
         promise.then((respota)=> {
             const filmes = respota.data.map((data)=>{
+                let link = `/SessionsPage`
                 return(
                     <MovieContainer key={data.id}>
-                        <Link to='/SessionsPage'>
-                          <img onClick={()=>console.log(props.Setid(data.id))} data-test="movie" src={data.posterURL} alt="poster"/>
+                        <Link to={link}>
+                          <img onClick={()=>{props.Setchosen(data);console.log(data)}} data-test="movie" src={data.posterURL} alt="poster"/>
                         </Link>
                     </MovieContainer>
                 )
             })
-            props.Setimagem(filmes)
+            props.Setcartaz(filmes)
         })}
             
     useEffect(()=>generatemovies(),[])
