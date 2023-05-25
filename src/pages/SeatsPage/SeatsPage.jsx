@@ -1,7 +1,6 @@
 import styled from "styled-components"
-
-export default function SeatsPage() {
-
+import axios from "axios"
+export default function SeatsPage(props) {
     return (
         <PageContainer>
             Selecione o(s) assento(s)

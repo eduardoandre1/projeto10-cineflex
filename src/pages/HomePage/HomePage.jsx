@@ -2,22 +2,20 @@ import styled from "styled-components"
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-export default function HomePage() {
-    const [cartaz,Setimagem]= useState([])
+export default function HomePage(props) {
     function generatemovies(){
         const promise = axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies')
         promise.then((respota)=> {
-            console.log(respota.data)
             const filmes = respota.data.map((data)=>{
-                console.log(data.posterURL)
                 return(
                     <MovieContainer key={data.id}>
-                        <img src={data.posterURL} alt="poster"/>
+                        <Link to='/SessionsPage'>
+                          <img onClick={()=>console.log(props.Setid(data.id))} data-test="movie" src={data.posterURL} alt="poster"/>
+                        </Link>
                     </MovieContainer>
                 )
             })
-            console.log(filmes)
-            Setimagem(filmes)
+            props.Setimagem(filmes)
         })}
             
     useEffect(()=>generatemovies(),[])
@@ -25,7 +23,7 @@ export default function HomePage() {
         <PageContainer>
             Selecione o filme
             <ListContainer>
-                {cartaz}
+                {props.cartaz}
             </ListContainer>
 
         </PageContainer>

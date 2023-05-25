@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { BrowserRouter,Routes,Route } from "react-router-dom"
 import axios from "axios"
+import { useState } from "react"
 
 import HomePage from "./pages/HomePage/HomePage"
 import SeatsPage from "./pages/SeatsPage/SeatsPage"
@@ -11,14 +12,16 @@ import SuccessPage from "./pages/SuccessPage/SuccessPage"
 
 export default function App() {
     axios.defaults.headers.common['Authorization'] = 'CXsWjs5oIZPtLIyHNdgCzRAl';
+    const [cartaz,Setimagem]= useState([])
+    const[id,Setid]= useState(0)
     return (
         <>
             <BrowserRouter>
             <NavContainer>CINEFLEX</NavContainer>
             <Routes>
-                <Route path="/" element={<HomePage />}/>
+                <Route path="/" element={<HomePage Setid={Setid} cartaz={cartaz} Setimagem={Setimagem}/>}/>
+                <Route path="/SessionsPage" element={<SessionsPage  id={id}/>}/>
                 <Route path="/SeatsPage" element={<SeatsPage />}/>
-                <Route path="/SessionsPage" element={<SessionsPage />}/>
                 <Route path="/SuccessPage" element={<SuccessPage />}/>
             </Routes>
             </BrowserRouter>

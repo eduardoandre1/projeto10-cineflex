@@ -1,7 +1,14 @@
 import styled from "styled-components"
+import axios from "axios"
 
-export default function SessionsPage() {
-
+export default function SessionsPage(props) {
+    function sessões(){
+        const promise = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${props.id}/showtimes`)
+        promise.then((respota)=>{console.log(respota.data)})
+        promise.catch((respota)=>{console.log('erro')})
+    }
+    
+    sessões()
     return (
         <PageContainer>
             Selecione o horário
@@ -30,7 +37,6 @@ export default function SessionsPage() {
                     </ButtonsContainer>
                 </SessionContainer>
             </div>
-
             <FooterContainer>
                 <div>
                     <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
