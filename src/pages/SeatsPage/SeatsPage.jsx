@@ -43,7 +43,7 @@ export default function SeatsPage(props) {
                     `
                 }
                 return(
-                    <Seatcor key={seat.id} onClick={()=>seatselecition(seat.id)} disabled={seat.isAvailable==true?false:true}> {seat.name}</Seatcor>
+                    <Seatcor key={seat.id} onClick={()=>seatselecition(seat.id)} data-test="seat"> {seat.name}</Seatcor>
                 )
             }
         ))
