@@ -43,7 +43,9 @@ export default function SeatsPage(props) {
                     `
                 }
                 return(
-                    <Seatcor key={seat.id} onClick={()=>seatselecition(seat.id)} data-test="seat"> {seat.name}</Seatcor>
+                    <button disabled={seat.isAvailable===false?true:false} onClick={()=>seatselecition(seat.id)}>
+                        <Seatcor key={seat.id} data-test="seat"> {seat.name}</Seatcor>
+                    </button>
                 )
             }
         ))
@@ -112,6 +114,9 @@ const SeatsContainer = styled.div`
     align-items: center;
     justify-content: center;
     margin-top: 20px;
+    button{
+        all: unset;
+    }
 `
 const FormContainer = styled.div`
     width: calc(100vw - 40px); 
