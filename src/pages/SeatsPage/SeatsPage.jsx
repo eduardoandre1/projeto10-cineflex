@@ -22,7 +22,10 @@ export default function SeatsPage(props) {
         popcorn.then(()=>alert('enviado'))
         popcorn.catch((resposta)=>{console.log(resposta)})
     }
-    function seatselecition(id,name){
+    function seatselecition(id,name,livre){
+        if(livre === false){
+            return alert('Assento indisponivel')
+        }
         if(selected.indexOf(id) ==-1){
             const newselected = [...selected,id]
             Setselect(newselected)
@@ -42,7 +45,7 @@ export default function SeatsPage(props) {
         console.log(assentosnome)        
     }
     function fconteiner(resposta){
-        Setfooter(<FooterContainer>
+        Setfooter(<FooterContainer data-test="footer">
                 <div>
                     <img src={resposta.movie.posterURL} alt="poster" />
                 </div>
@@ -68,7 +71,7 @@ export default function SeatsPage(props) {
                     `
                 }
                 return(
-                    <button disabled={seat.isAvailable===false?true:false} onClick={()=>seatselecition(seat.id,seat.name)}>
+                    <button onClick={()=>seatselecition(seat.id,seat.name,seat.isAvailable)}>
                         <Seatcor key={seat.id} data-test="seat"> {seat.name}</Seatcor>
                     </button>
                 )
@@ -79,6 +82,8 @@ export default function SeatsPage(props) {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${props.seatspageid}/seats`)
         promise.then((resposta)=>{fconteiner(resposta.data);seatgenerete(resposta.data)})
     }
+    const indisponivel = styled(CaptionCircle)`
+    `
     useEffect(assentos,[selected])
     return (
         <PageContainer>
