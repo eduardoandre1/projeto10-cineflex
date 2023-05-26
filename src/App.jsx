@@ -24,10 +24,10 @@ export default function App() {
             <NavContainer>CINEFLEX</NavContainer>
             <Routes>
                 <Route path="/" element={<HomePage Setchosen={Setchosen} cartaz={cartaz} Setcartaz={Setcartaz}/>}/>
-                <Route path="/sessoes" element={<SessionsPage  
+                <Route path="/sessoes/:idfilme" element={<SessionsPage  
                 chosen={chosen} Footer={Footer} SetFooter={SetFooter} sessions={sessions} Setsessions={Setsessions}
                 Setseatspageid={Setseatspageid}/>}/>
-                <Route path="/assentos" element={<SeatsPage  seatspageid={seatspageid}/>}/>
+                <Route path="/assentos/:idassento" element={<SeatsPage  seatspageid={seatspageid}/>}/>
                 <Route path="/sucesso" element={<SuccessPage />}/>
             </Routes>
             </BrowserRouter>

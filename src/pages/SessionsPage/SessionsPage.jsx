@@ -18,7 +18,7 @@ export default function SessionsPage(props) {
     }
     function SContainer(resposta){
         const season =resposta.days.map((days)=>
-        {   const link = `/assentos`
+        {   const link = `/assentos/${days.id}`
             return(
             <SessionContainer key={days.id}>
                         {days.weekday} - {days.date}
