@@ -7,6 +7,7 @@ export default function SeatsPage(props) {
     const [seats,Setseats] = useState(<></>)
     const [selected,Setselect] = useState([])
     const [pedidos,Setpedido]= useState({})
+    const [assentosnome,Setassentos] = useState([])
 
     function enviarpedido(){
         const nome = document.getElementById('client')
@@ -21,15 +22,24 @@ export default function SeatsPage(props) {
         popcorn.then(()=>alert('enviado'))
         popcorn.catch((resposta)=>{console.log(resposta)})
     }
-    function seatselecition(id){
+    function seatselecition(id,name){
         if(selected.indexOf(id) ==-1){
             const newselected = [...selected,id]
             Setselect(newselected)
         }else{
             const newselected = selected.filter((item) => item !== id )
             Setselect(newselected)
-        }
+        }        
         console.log(selected)
+        if(assentosnome.indexOf(name) ==-1){
+            const news = [...assentosnome,name]
+            Setassentos(news)
+        }else{
+            const news = assentosnome.filter((item) => item !== name )
+            Setassentos(news)
+            
+        }
+        console.log(assentosnome)        
     }
     function fconteiner(resposta){
         Setfooter(<FooterContainer>
@@ -58,7 +68,7 @@ export default function SeatsPage(props) {
                     `
                 }
                 return(
-                    <button disabled={seat.isAvailable===false?true:false} onClick={()=>seatselecition(seat.id)}>
+                    <button disabled={seat.isAvailable===false?true:false} onClick={()=>seatselecition(seat.id,seat.name)}>
                         <Seatcor key={seat.id} data-test="seat"> {seat.name}</Seatcor>
                     </button>
                 )
@@ -67,7 +77,7 @@ export default function SeatsPage(props) {
     }
     function assentos(){
         const promise = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${props.seatspageid}/seats`)
-        promise.then((resposta)=>{fconteiner(resposta.data);seatgenerete(resposta.data);console.log(resposta.data)})
+        promise.then((resposta)=>{fconteiner(resposta.data);seatgenerete(resposta.data)})
     }
     useEffect(assentos,[selected])
     return (
@@ -99,7 +109,7 @@ export default function SeatsPage(props) {
 
                 CPF do Comprador:
                 <input id="cpf" placeholder="Digite seu CPF..." data-test="client-cpf"/>
-                <Link to={'/successo'}>
+                <Link to={'/sucesso'} key={'s'}>
                     <button onClick={()=>{enviarpedido()}}>Reservar Assento(s)</button>
                 </Link>
                 

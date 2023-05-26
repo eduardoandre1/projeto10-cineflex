@@ -10,7 +10,7 @@ export default function HomePage(props) {
                 let link = `/sessoes/${data.id}`
                 return(
                     <MovieContainer key={data.id}>
-                        <Link to={link}>
+                        <Link to={link} key={data.id}>
                             <img onClick={()=>{props.Setchosen(data);console.log(data)}} data-test="movie" src={data.posterURL} alt="poster"/>
                         </Link>
                     </MovieContainer>

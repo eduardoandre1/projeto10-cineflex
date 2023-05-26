@@ -22,7 +22,7 @@ export default function SessionsPage(props) {
             return(
             <SessionContainer key={days.id}>
                         {days.weekday} - {days.date}
-                    <Link to={link}>
+                    <Link to={link} key={days.id}>
                     <ButtonsContainer >
                         {days.showtimes.map((data)=>{return(<button onClick={()=>{props.Setseatspageid(data.id)}} key={data.id}>{data.name}</button>)})}
                     </ButtonsContainer>
