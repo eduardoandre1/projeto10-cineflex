@@ -9,9 +9,9 @@ export default function HomePage(props) {
             const filmes = respota.data.map((data)=>{
                 let link = `/sessoes`
                 return(
-                    <MovieContainer key={data.id}>
+                    <MovieContainer data-test="movie" key={data.id}>
                         <Link to={link} key={data.id}>
-                            <img onClick={()=>{props.Setchosen(data);console.log(data)}} data-test="movie" src={data.posterURL} alt="poster"/>
+                            <img  onClick={()=>{props.Setchosen(data)}}  src={data.posterURL} alt="poster"/>
                         </Link>
                     </MovieContainer>
                 )
@@ -19,7 +19,7 @@ export default function HomePage(props) {
             props.Setcartaz(filmes)
         })}
             
-    useEffect(()=>generatemovies(),[props.cartaz])
+    useEffect(()=>generatemovies(),[])
             return (
         <PageContainer>
             Selecione o filme
