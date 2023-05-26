@@ -18,6 +18,7 @@ export default function SeatsPage(props) {
             cpf: cpf.value
         }
         Setpedido(pedido)
+        console.log(pedido)
         const popcorn = axios.post('https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many',pedido)
         popcorn.then(()=>alert('enviado'))
         popcorn.catch((resposta)=>{console.log(resposta)})
@@ -66,12 +67,12 @@ export default function SeatsPage(props) {
                 `
                 }else{
                     Seatcor =styled(SeatItem)`
-                    background-color:#1AAE9E;
-                    border: 3px solid 1px solid #0E7D71;
+                    background: #1AAE9E;
+                    border: 1px solid #0E7D71;
                     `
                 }
                 return(
-                    <button onClick={()=>seatselecition(seat.id,seat.name,seat.isAvailable)}>
+                    <button key={seat.id} onClick={()=>seatselecition(seat.id,seat.name,seat.isAvailable)}>
                         <Seatcor key={seat.id} data-test="seat"> {seat.name}</Seatcor>
                     </button>
                 )
@@ -82,8 +83,7 @@ export default function SeatsPage(props) {
         const promise = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${props.seatspageid}/seats`)
         promise.then((resposta)=>{fconteiner(resposta.data);seatgenerete(resposta.data)})
     }
-    const indisponivel = styled(CaptionCircle)`
-    `
+    
     useEffect(assentos,[selected])
     return (
         <PageContainer>
@@ -95,7 +95,7 @@ export default function SeatsPage(props) {
 
             <CaptionContainer>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <Selectedexample />
                     Selecionado
                 </CaptionItem>
                 <CaptionItem>
@@ -103,17 +103,17 @@ export default function SeatsPage(props) {
                     Disponível
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <Indisponivel />
                     Indisponível
                 </CaptionItem>
             </CaptionContainer>
 
             <FormContainer>
                 Nome do Comprador:
-                <input id="client" placeholder="Digite seu nome..." data-test="client-name"/>
+                <input id="client" minLength='2' placeholder="Digite seu nome..." data-test="client-name"/>
 
                 CPF do Comprador:
-                <input id="cpf" placeholder="Digite seu CPF..." data-test="client-cpf"/>
+                <input  maxlength='11'type="text"  id="cpf"  placeholder="Digite seu CPF..." data-test="client-cpf"/>
                 <Link to={'/sucesso'} key={'s'}>
                     <button onClick={()=>{enviarpedido()}}>Reservar Assento(s)</button>
                 </Link>
@@ -181,6 +181,14 @@ const CaptionCircle = styled.div`
     align-items: center;
     justify-content: center;
     margin: 5px 3px;
+`
+const Indisponivel = styled(CaptionCircle)`
+    border: '1px solid #F7C52B';
+    background-color:#FBE192;
+    `
+const Selectedexample = styled(CaptionCircle)`
+    background-color:#1AAE9E;
+    border: 3px solid 1px solid #0E7D71;
 `
 const CaptionItem = styled.div`
     display: flex;
