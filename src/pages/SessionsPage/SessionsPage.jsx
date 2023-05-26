@@ -6,12 +6,12 @@ import { Link } from "react-router-dom"
 export default function SessionsPage(props) {
     function FContainer(resposta){
         props.SetFooter(
-            <FooterContainer>
-                <div data-test="footer">
+            <FooterContainer data-test="footer">
+                <div >
                     <img src={resposta.posterURL} alt="poster" />
                 </div>
-                <div data-test="footer">
-                    <p>{resposta.title}</p>
+                <div>
+                    <p data-test="footer">{resposta.title}</p>
                 </div>
             </FooterContainer>
         )
