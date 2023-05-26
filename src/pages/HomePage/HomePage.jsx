@@ -7,11 +7,11 @@ export default function HomePage(props) {
         const promise = axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies')
         promise.then((respota)=> {
             const filmes = respota.data.map((data)=>{
-                let link = `/SessionsPage`
+                let link = `/sessões/${data.id}`
                 return(
                     <MovieContainer key={data.id}>
                         <Link to={link}>
-                          <img onClick={()=>{props.Setchosen(data);console.log(data)}} data-test="movie" src={data.posterURL} alt="poster"/>
+                            <img onClick={()=>{props.Setchosen(data);console.log(data)}} data-test="movie" src={data.posterURL} alt="poster"/>
                         </Link>
                     </MovieContainer>
                 )
@@ -19,7 +19,7 @@ export default function HomePage(props) {
             props.Setcartaz(filmes)
         })}
             
-    useEffect(()=>generatemovies(),[])
+    useEffect(()=>generatemovies(),[props.cartaz])
             return (
         <PageContainer>
             Selecione o filme
@@ -43,11 +43,13 @@ const PageContainer = styled.div`
     padding-top: 70px;
 `
 const ListContainer = styled.div`
-    width: 330px;
+    width: 100vw;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
 `
 const MovieContainer = styled.div`
     width: 145px;

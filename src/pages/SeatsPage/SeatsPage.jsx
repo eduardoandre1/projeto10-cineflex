@@ -1,11 +1,26 @@
 import styled from "styled-components"
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 export default function SeatsPage(props) {
     const [footer,Setfooter] = useState(<></>)
     const [seats,Setseats] = useState(<></>)
     const [selected,Setselect] = useState([])
+    const [pedidos,Setpedido]= useState({})
 
+    function enviarpedido(){
+        const nome = document.getElementById('client')
+        const cpf = document.getElementById('cpf')
+        const pedido ={
+            ids: selected,
+            name: nome.value,
+            cpf: cpf.value
+        }
+        Setpedido(pedido)
+        const popcorn = axios.post('https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many',pedido)
+        popcorn.then(()=>alert('enviado'))
+        popcorn.catch((resposta)=>{console.log(resposta)})
+    }
     function seatselecition(id){
         if(selected.indexOf(id) ==-1){
             const newselected = [...selected,id]
@@ -80,12 +95,14 @@ export default function SeatsPage(props) {
 
             <FormContainer>
                 Nome do Comprador:
-                <input placeholder="Digite seu nome..." data-test="client-name"/>
+                <input id="client" placeholder="Digite seu nome..." data-test="client-name"/>
 
                 CPF do Comprador:
-                <input placeholder="Digite seu CPF..." data-test="client-cpf"/>
-
-                <button>Reservar Assento(s)</button>
+                <input id="cpf" placeholder="Digite seu CPF..." data-test="client-cpf"/>
+                <Link to={'/SuccessPage'}>
+                    <button onClick={()=>{enviarpedido()}}>Reservar Assento(s)</button>
+                </Link>
+                
             </FormContainer>
 
             {footer}

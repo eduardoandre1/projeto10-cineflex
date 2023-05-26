@@ -4,10 +4,8 @@ import { useState,useEffect } from "react"
 import { Link } from "react-router-dom"
 
 export default function SessionsPage(props) {
-    const [Footer,SetFooter] = useState(<></>)
-    const [sessions,Setsessions] = useState(<></>)
     function FContainer(resposta){
-        SetFooter(
+        props.SetFooter(
             <FooterContainer>
                 <div data-test="footer">
                     <img src={resposta.posterURL} alt="poster" />
@@ -20,11 +18,11 @@ export default function SessionsPage(props) {
     }
     function SContainer(resposta){
         const season =resposta.days.map((days)=>
-        {   
+        {   const link = `/assentos/${days.id}`
             return(
             <SessionContainer key={days.id}>
                         {days.weekday} - {days.date}
-                    <Link to='/SeatsPage'>
+                    <Link to={link}>
                     <ButtonsContainer >
                         {days.showtimes.map((data)=>{return(<button onClick={()=>{props.Setseatspageid(data.id)}} key={data.id}>{data.name}</button>)})}
                     </ButtonsContainer>
@@ -33,21 +31,21 @@ export default function SessionsPage(props) {
         )
         }
         )
-        Setsessions(season)
+        props.Setsessions(season)
     }
     function sessões(){
         const promise = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${props.chosen.id}/showtimes`)
         promise.then((respota)=>{FContainer(respota.data);SContainer(respota.data)})
-        promise.catch((respota)=>{console.log('erro')})
+        promise.catch(()=>{console.log('erro')})
     }
     useEffect(sessões,[])
     return (
         <PageContainer>
             Selecione o horário
             <div>
-            {sessions}
+            {props.sessions}
             </div>
-            {Footer}
+            {props.Footer}
 
         </PageContainer>
     )
@@ -75,6 +73,9 @@ const SessionContainer = styled.div`
     font-size: 20px;
     color: #293845;
     padding: 0 20px;
+    a{
+        all: unset;
+    }
 `
 const ButtonsContainer = styled.div`
     display: flex;

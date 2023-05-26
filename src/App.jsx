@@ -16,14 +16,18 @@ export default function App() {
     const[chosen,Setchosen]= useState('')
     const [sessionid,Setsessionid] =useState(0)
     const [seatspageid,Setseatspageid] =useState(0)
+    const [Footer,SetFooter] = useState(<></>)
+    const [sessions,Setsessions] = useState(<></>)
     return (
         <>
             <BrowserRouter>
             <NavContainer>CINEFLEX</NavContainer>
             <Routes>
                 <Route path="/" element={<HomePage Setchosen={Setchosen} cartaz={cartaz} Setcartaz={Setcartaz}/>}/>
-                <Route path="/SessionsPage" element={<SessionsPage  chosen={chosen} Setseatspageid={Setseatspageid}/>}/>
-                <Route path="/SeatsPage" element={<SeatsPage  seatspageid={seatspageid}/>}/>
+                <Route path="/sessões/:id" element={<SessionsPage  
+                chosen={chosen} Footer={Footer} SetFooter={SetFooter} sessions={sessions} Setsessions={Setsessions}
+                Setseatspageid={Setseatspageid}/>}/>
+                <Route path="/assentos/:id" element={<SeatsPage  seatspageid={seatspageid}/>}/>
                 <Route path="/SuccessPage" element={<SuccessPage />}/>
             </Routes>
             </BrowserRouter>
