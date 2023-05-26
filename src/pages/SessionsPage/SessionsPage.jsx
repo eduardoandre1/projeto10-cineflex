@@ -20,11 +20,11 @@ export default function SessionsPage(props) {
         const season =resposta.days.map((days)=>
         {   const link = `/assentos/${days.id}`
             return(
-            <SessionContainer key={days.id}>
+            <SessionContainer data-test="movie-day" key={days.id}>
                         {days.weekday} - {days.date}
                     <Link to={link} key={days.id}>
                     <ButtonsContainer >
-                        {days.showtimes.map((data)=>{return(<button onClick={()=>{props.Setseatspageid(data.id)}} key={data.id}>{data.name}</button>)})}
+                        {days.showtimes.map((data)=>{return(<button data-test="showtime" onClick={()=>{props.Setseatspageid(data.id)}} key={data.id}>{data.name}</button>)})}
                     </ButtonsContainer>
                     </Link>
             </SessionContainer>
