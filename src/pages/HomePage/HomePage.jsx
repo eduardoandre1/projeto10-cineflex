@@ -7,7 +7,7 @@ export default function HomePage(props) {
         const promise = axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies')
         promise.then((respota)=> {
             const filmes = respota.data.map((data)=>{
-                let link = `/sessões/${data.id}`
+                let link = `/sessoes/${data.id}`
                 return(
                     <MovieContainer key={data.id}>
                         <Link to={link}>
