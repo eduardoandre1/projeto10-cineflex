@@ -11,7 +11,7 @@ export default function SessionsPage(props) {
                     <img src={resposta.posterURL} alt="poster" />
                 </div>
                 <div>
-                    <p data-test="footer">{resposta.title}</p>
+                    <p>{resposta.title}</p>
                 </div>
             </FooterContainer>
         )
