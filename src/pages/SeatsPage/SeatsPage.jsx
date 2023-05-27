@@ -7,7 +7,7 @@ export default function SeatsPage(props) {
     const [seats,Setseats] = useState(<></>)
     const [selected,Setselect] = useState([])
     const [pedidos,Setpedido]= useState({})
-    const [assentosnome,Setassentos] = useState([])
+    
 
     function enviarpedido(){
         const nome = document.getElementById('client')
@@ -17,8 +17,7 @@ export default function SeatsPage(props) {
             name: nome.value,
             cpf: cpf.value
         }
-        Setpedido(pedido)
-        console.log(pedido)
+        props.Setclient(pedido)
         const popcorn = axios.post('https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many',pedido)
         popcorn.then(()=>alert('enviado'))
         popcorn.catch((resposta)=>{console.log(resposta)})
@@ -35,15 +34,15 @@ export default function SeatsPage(props) {
             Setselect(newselected)
         }        
         console.log(selected)
-        if(assentosnome.indexOf(name) ==-1){
-            const news = [...assentosnome,name]
-            Setassentos(news)
+        if(props.assentosnome.indexOf(name) ==-1){
+            const news = [...props.assentosnome,name]
+            props.Setassentos(news)
         }else{
-            const news = assentosnome.filter((item) => item !== name )
-            Setassentos(news)
+            const news = props.assentosnome.filter((item) => item !== name )
+            props.Setassentos(news)
             
         }
-        console.log(assentosnome)        
+        console.log(props.assentosnome)        
     }
     function fconteiner(resposta){
         Setfooter(<FooterContainer data-test="footer">
@@ -81,7 +80,7 @@ export default function SeatsPage(props) {
     }
     function assentos(){
         const promise = axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${props.seatspageid}/seats`)
-        promise.then((resposta)=>{fconteiner(resposta.data);seatgenerete(resposta.data)})
+        promise.then((resposta)=>{fconteiner(resposta.data);seatgenerete(resposta.data);props.Setchosen(resposta.data)})
     }
     
     useEffect(assentos,[selected])
@@ -110,10 +109,10 @@ export default function SeatsPage(props) {
 
             <FormContainer>
                 Nome do Comprador:
-                <input id="client" minLength='2' placeholder="Digite seu nome..." data-test="client-name"/>
+                <input data-test="client-name" id="client" placeholder="Digite seu nome..." />
 
                 CPF do Comprador:
-                <input  maxlength='11'type="text"  id="cpf"  placeholder="Digite seu CPF..." data-test="client-cpf"/>
+                <input data-test="client-cpf" maxlength='11'  id="cpf"  placeholder="Digite seu CPF..." />
                 <Link to={'/sucesso'} key={'s'}>
                     <button onClick={()=>{enviarpedido()}}>Reservar Assento(s)</button>
                 </Link>

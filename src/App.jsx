@@ -14,10 +14,11 @@ export default function App() {
     axios.defaults.headers.common['Authorization'] = 'CXsWjs5oIZPtLIyHNdgCzRAl';
     const [cartaz,Setcartaz]= useState([])
     const[chosen,Setchosen]= useState('')
-    const [sessionid,Setsessionid] =useState(0)
     const [seatspageid,Setseatspageid] =useState(0)
     const [Footer,SetFooter] = useState(<></>)
     const [sessions,Setsessions] = useState(<></>)
+    const [assentosnome,Setassentos] = useState([])
+    const [client,Setclient]=useState({})
     return (
         <>
             <BrowserRouter>
@@ -27,8 +28,8 @@ export default function App() {
                 <Route path="/sessoes/:idfilme" element={<SessionsPage  
                 chosen={chosen} Footer={Footer} SetFooter={SetFooter} sessions={sessions} Setsessions={Setsessions}
                 Setseatspageid={Setseatspageid}/>}/>
-                <Route path="/assentos/:idassento" element={<SeatsPage  seatspageid={seatspageid}/>}/>
-                <Route path="/sucesso" element={<SuccessPage />}/>
+                <Route path="/assentos/:idassento" element={<SeatsPage Setclient={Setclient} assentosnome={assentosnome} Setassentos={Setassentos} Setchosen={Setchosen} seatspageid={seatspageid}/>}/>
+                <Route path="/sucesso" element={<SuccessPage client={client}  assentosnome={assentosnome} chosen={chosen}/>}/>
             </Routes>
             </BrowserRouter>
         </>
