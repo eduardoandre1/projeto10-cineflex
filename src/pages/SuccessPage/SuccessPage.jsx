@@ -36,7 +36,7 @@ export default function SuccessPage(props) {
             {database}
             {reservas}
             {dados}
-            <Link data-test="go-home-btn" to "/">Voltar para Home</Link>
+            <Link data-test="go-home-btn" to="/">Voltar para Home</Link>
         </PageContainer>
     )
 }
