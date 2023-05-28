@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import styled from "styled-components"
 
 export default function SuccessPage(props) {
@@ -35,7 +36,7 @@ export default function SuccessPage(props) {
             {database}
             {reservas}
             {dados}
-            <button>Voltar para Home</button>
+            <Link data-test="go-home-btn" to "/">Voltar para Home</Link>
         </PageContainer>
     )
 }
