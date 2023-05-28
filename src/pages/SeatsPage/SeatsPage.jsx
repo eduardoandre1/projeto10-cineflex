@@ -114,7 +114,7 @@ export default function SeatsPage(props) {
                 CPF do Comprador:
                 <input type="text" data-test="client-cpf" maxlength='11'  id="cpf"  placeholder="Digite seu CPF..." />
                 <Link to={'/sucesso'} key={'s'}>
-                    <button onClick={()=>{enviarpedido()}}>Reservar Assento(s)</button>
+                    <button data-test="book-seat-btn" onClick={()=>{enviarpedido()}}>Reservar Assento(s)</button>
                 </Link>
                 
             </FormContainer>
