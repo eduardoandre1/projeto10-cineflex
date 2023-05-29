@@ -109,7 +109,7 @@ export default function SeatsPage(props) {
 
             <FormContainer>
                 Nome do Comprador:
-                <input data-test="client-name" id="client" placeholder="Digite seu nome..." />
+                <input type="text" data-test="client-name" id="client" placeholder="Digite seu nome..." />
 
                 CPF do Comprador:
                 <input type="text" data-test="client-cpf" maxlength='11'  id="cpf"  placeholder="Digite seu CPF..." />
