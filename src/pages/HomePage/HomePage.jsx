@@ -1,26 +1,27 @@
-import styled from "styled-components"
-import axios from "axios"
-import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-export default function HomePage(props) {
-    function generatemovies(){
-        const promise = axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies')
-        promise.then((respota)=> {
-            const filmes = respota.data.map((data)=>{
-                let link = `/sessoes/${data.id}`
-                return(
+import styled from 'styled-components'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+export default function HomePage (props) {
+  function generatemovies () {
+    const promise = axios.get('https://mock-api.driven.com.br/api/v8/cineflex/movies')
+    promise.then((respota) => {
+      const filmes = respota.data.map((data) => {
+        const link = `/sessoes/${data.id}`
+        return (
                     <MovieContainer data-test="movie" key={data.id}>
                         <Link to={link} key={data.id}>
-                            <img  onClick={()=>{props.Setchosen(data)}}  src={data.posterURL} alt="poster"/>
+                            <img onClick={() => { props.Setchosen(data) }} src={data.posterURL} alt="poster"/>
                         </Link>
                     </MovieContainer>
-                )
-            })
-            props.Setcartaz(filmes)
-        })}
-            
-    useEffect(()=>generatemovies(),[])
-            return (
+        )
+      })
+      props.Setcartaz(filmes)
+    })
+  }
+
+  useEffect(() => generatemovies(), [])
+  return (
         <PageContainer>
             Selecione o filme
             <ListContainer>
@@ -28,7 +29,7 @@ export default function HomePage(props) {
             </ListContainer>
 
         </PageContainer>
-    )
+  )
 }
 
 const PageContainer = styled.div`
