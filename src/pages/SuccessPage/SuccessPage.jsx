@@ -1,45 +1,45 @@
-import { Link } from "react-router-dom"
-import styled from "styled-components"
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
-export default function SuccessPage(props) {
-    function genereteresultpage(resposta){
-        return(
-            <TextContainer data-test="movie-info">
-                <strong><p>Filme e sessão</p></strong>
-                <p>{resposta.movie.title}</p>
-                <p>{resposta.day.date} - {resposta.name}</p>
-            </TextContainer>
-        )
-    }
-    function assentos(name){
-        return(
+export default function SuccessPage (props) {
+  const dataBase = genereterResultPage(props.chosen)
+  const seatsReservetion = seats(props.assentosnome)
+  const dataClient = client(props.client)
+  return (
+        <PageContainer>
+            {dataBase}
+            {seatsReservetion}
+            {dataClient}
+            <Link data-test="go-home-btn" to="/">Voltar para Home</Link>
+        </PageContainer>
+  )
+}
+function seats (name) {
+    return (
         <TextContainer data-test="seats-info">
                 <strong><p>Ingressos</p></strong>
-                {name.map((name)=>{return(<p>Assento {name}</p>)})}
+                {name.map((name) => { return (<p>Assento {name}</p>) })}
         </TextContainer>
-        )
-    }
-    function client(client){
-        return(
+    )
+  }
+function client (client) {
+    return (
             <TextContainer data-test="client-info">
                 <strong><p>Comprador</p></strong>
                 <p>Nome: {client.name}</p>
                 <p>CPF: {client.cpf}</p>
             </TextContainer>
-        )
-    }
-    let database = genereteresultpage(props.chosen)
-    let reservas = assentos(props.assentosnome)
-    let dados = client(props.client)
-    return (
-        <PageContainer>
-            {database}
-            {reservas}
-            {dados}
-            <Link data-test="go-home-btn" to="/">Voltar para Home</Link>
-        </PageContainer>
     )
-}
+  }
+function genereterResultPage (apiRespost) {
+    return (
+            <TextContainer data-test="movie-info">
+                <strong><p>Filme e sessão</p></strong>
+                <p>{apiRespost.movie.title}</p>
+                <p>{apiRespost.day.date} - {apiRespost.name}</p>
+            </TextContainer>
+    )
+  }
 
 const PageContainer = styled.div`
     display: flex;
